@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Noarifty | Roblox Developer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ================= RESET ================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0a0a0a;
+    color:#fff;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+/* ================= NAVBAR (clean + simple) ================= */
+nav{
+    position:fixed;
+    width:100%;
+    top:0;
+    background:rgba(10,10,10,.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.05);
+    z-index:1000;
+}
+
+.nav-inner{
+    max-width:1100px;
+    margin:auto;
+    padding:18px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-weight:700;
+    font-size:1.1rem;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:24px;
+    opacity:.65;
+    transition:.2s;
+}
+
+nav a:hover{
+    opacity:1;
+    color:#00aaff;
+}
+
+/* ================= HERO ================= */
+header{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:120px 20px 80px;
+    position:relative;
+}
+
+/* soft background glow */
+header::before{
+    content:"";
+    position:absolute;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle,#0077ff55,transparent 60%);
+    filter:blur(120px);
+    z-index:-1;
+}
+
+header h1{
+    font-size:3.8rem;
+    font-weight:700;
+    background:linear-gradient(90deg,#00aaff,#0077ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+header p{
+    margin-top:18px;
+    opacity:.75;
+    font-size:1.15rem;
+}
+
+/* buttons */
+.hero-buttons{
+    margin-top:34px;
+    display:flex;
+    gap:18px;
+}
+
+.btn{
+    padding:14px 26px;
+    border-radius:10px;
+    font-weight:600;
+    text-decoration:none;
+    transition:.25s;
+}
+
+.btn-primary{
+    background:linear-gradient(135deg,#0077ff,#00b3ff);
+}
+
+.btn-secondary{
+    border:1px solid rgba(255,255,255,.2);
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+/* ================= LAYOUT ================= */
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:120px 26px;
+}
+
+h2{
+    text-align:center;
+    font-size:2.3rem;
+    margin-bottom:48px;
+}
+
+/* ================= CARDS ================= */
+.card{
+    background:#141414;
+    border-radius:18px;
+    padding:34px;
+    border:1px solid rgba(255,255,255,.06);
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:#0077ff55;
+}
+
+/* ================= ABOUT ================= */
+.about-text{
+    max-width:750px;
+    margin:auto;
+    text-align:center;
+    font-size:1.05rem;
+}
+
+/* ================= PROJECTS ================= */
+.projects-grid{
+    display:grid;
+    gap:32px;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+}
+
+.project-card h3{
+    margin:12px 0 8px;
+}
+
+.video-container{
+    position:relative;
+    padding-top:56.25%;
+    overflow:hidden;
+    border-radius:12px;
+    margin-bottom:16px;
+}
+
+.video-container iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+/* tags */
+.tags{
+    margin-bottom:10px;
+}
+
+.tag{
+    display:inline-block;
+    padding:4px 9px;
+    font-size:.75rem;
+    background:#1e2f3a;
+    border-radius:6px;
+    margin-right:6px;
+    color:#9fdcff;
+}
+
+/* ================= CONTACT ================= */
+.contact-box{
+    text-align:center;
+}
+
+.discord-btn{
+    margin-top:18px;
+    padding:12px 22px;
+    border-radius:10px;
+    background:linear-gradient(135deg,#0077ff,#00b3ff);
+    border:none;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* ================= FOOTER ================= */
+footer{
+    text-align:center;
+    opacity:.4;
+    padding:70px 0;
+}
+
+/* ================= SMALL ANIMATION ================= */
+.fade{
+    opacity:0;
+    transform:translateY(25px);
+    transition:.7s;
+}
+
+.fade.show{
+    opacity:1;
+    transform:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+<div class="nav-inner">
+<div class="logo">Noarifty</div>
+<div>
+<a href="#about">About</a>
+<a href="#projects">Projects</a>
+<a href="#contact">Contact</a>
+</div>
+</div>
+</nav>
+
+
+<!-- HERO -->
+<header>
+<h1>Noarifty</h1>
+<p>Roblox Developer • Gameplay Systems • UI Logic • Backend Architecture</p>
+
+<div class="hero-buttons">
+<a href="#projects" class="btn btn-primary">View Work</a>
+<a href="#contact" class="btn btn-secondary">Hire Me</a>
+</div>
+</header>
+
+
+<!-- ABOUT -->
+<section id="about" class="container fade">
+<h2>About Me</h2>
+<div class="card about-text">
+I'm a Roblox developer focused on building clean, scalable systems like inventories,
+shops, pets, and secure backend logic. I prioritize performance and professional architecture.
+</div>
+</section>
+
+
+<!-- PROJECTS -->
+<section id="projects" class="container fade">
+<h2>Projects</h2>
+
+<div class="projects-grid">
+
+<div class="card project-card">
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/Oad6XZsjMMw" allowfullscreen></iframe>
+</div>
+<h3>Inventory System</h3>
+<div class="tags">
+<span class="tag">Backend</span>
+<span class="tag">UI</span>
+<span class="tag">Systems</span>
+</div>
+<p>Server-authentic storage with modular architecture and clean UI logic.</p>
+</div>
+
+<div class="card project-card">
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/Oad6XZsjMMw" allowfullscreen></iframe>
+</div>
+<h3>Shop + Data System</h3>
+<div class="tags">
+<span class="tag">DataStore</span>
+<span class="tag">Economy</span>
+</div>
+<p>Secure purchases, saving, and scalable economy handling.</p>
+</div>
+
+</div>
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact" class="container fade">
+<h2>Contact</h2>
+
+<div class="card contact-box">
+<p>Discord: <strong>Noarifty</strong></p>
+<button class="discord-btn" onclick="copyDiscord()">Copy Username</button>
+</div>
+</section>
+
+
+<footer>
+© 2025 Noarifty — Roblox Developer
+</footer>
+
+
+<script>
+const obs=new IntersectionObserver(entries=>{
+entries.forEach(e=>{
+if(e.isIntersecting)e.target.classList.add('show');
+});
+});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+
+function copyDiscord(){
+navigator.clipboard.writeText("Noarifty");
+alert("Copied!");
+}
+</script>
+
+</body>
+</html>
