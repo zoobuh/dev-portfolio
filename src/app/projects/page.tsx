@@ -5,6 +5,12 @@ import { motion } from "framer-motion";
 
 const projects = [
     {
+        title: "Inventory System",
+        videoUrl: "https://www.youtube.com/embed/Oad6XZsjMMw",
+        tags: ["Backend", "UI", "Systems"],
+        description: "Server-authentic storage with modular architecture and clean UI logic.",
+    },
+    {
         title: "Simple Loading Screen with Animations",
         videoUrl: "https://streamable.com/e/iknb9o",
         tags: ["UI", "Animations", "Tweens"],
@@ -18,7 +24,7 @@ const projects = [
     },
     {
         title: "Cash Grab Game System",
-        videoUrl: "https://medal.tv/clip/m1057HbZQM1kUwKH2",
+        videoUrl: "https://medal.tv/clip/m10CZ4rK7D2rag9gY",
         tags: ["Gamepass", "Backend", "Systems"],
         description: "Complete game system including gamepass integration, monetization logic, and core gameplay mechanics.",
     },
