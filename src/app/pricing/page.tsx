@@ -1,12 +1,73 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Check, CreditCard, DollarSign, Wallet, ArrowRight, ShieldCheck } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Check, CreditCard, DollarSign, Wallet, ArrowRight, ShieldCheck, Zap, Layers, Box } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+
+const pricingTiers = [
+    {
+        id: "simple",
+        name: "Simple Tasks",
+        price: "2,000–5,000",
+        color: "text-green-500",
+        bgColor: "bg-green-500/10",
+        borderColor: "border-green-500/20",
+        icon: Zap,
+        description: "Small features, fixes, or lightweight scripts.",
+        examples: [
+            "Bug fixes",
+            "Small scripts",
+            "Simple UI logic",
+            "Basic tools or abilities",
+            "Minor edits to existing systems",
+            "Simple data saving",
+        ]
+    },
+    {
+        id: "standard",
+        name: "Standard Systems",
+        price: "6,000–15,000",
+        color: "text-blue-500",
+        bgColor: "bg-blue-500/10",
+        borderColor: "border-blue-500/20",
+        icon: Layers,
+        description: "Medium-sized or standalone systems.",
+        examples: [
+            "Shop systems",
+            "Inventory systems",
+            "Pets/companions",
+            "Admin/mod tools",
+            "Matchmaking/lobby systems",
+            "DataStore setups",
+            "Custom UI frameworks",
+        ]
+    },
+    {
+        id: "advanced",
+        name: "Advanced / Large Systems",
+        price: "18,000–40,000+",
+        color: "text-purple-500",
+        bgColor: "bg-purple-500/10",
+        borderColor: "border-purple-500/20",
+        icon: Box,
+        description: "Complex or fully custom systems that require significant planning and backend work.",
+        examples: [
+            "Full game frameworks",
+            "Large progression/simulator systems",
+            "Secure server-client architecture",
+            "Multiple connected systems",
+            "Long-term or multi-week projects",
+        ]
+    }
+];
 
 export default function PricingPage() {
+    const [activeTier, setActiveTier] = useState("standard");
+
     const fadeIn = {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
@@ -29,7 +90,7 @@ export default function PricingPage() {
 
     return (
         <main className="min-h-screen pt-24 pb-20 px-6">
-            <div className="max-w-6xl mx-auto space-y-16">
+            <div className="max-w-6xl mx-auto space-y-24">
 
                 {/* Header Section */}
                 <motion.div
@@ -46,11 +107,116 @@ export default function PricingPage() {
                     </p>
                 </motion.div>
 
-                {/* Main Content Grid */}
+                {/* General Pricing Guide Section */}
+                <section className="space-y-12">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-center space-y-4"
+                    >
+                        <h2 className="text-3xl font-bold">General Pricing Guide</h2>
+                        <p className="text-muted-foreground max-w-2xl mx-auto">
+                            These are estimated ranges for common requests. Final pricing depends on complexity and time required.
+                        </p>
+                    </motion.div>
+
+                    {/* Interactive Slider / Tabs */}
+                    <div className="flex flex-col items-center gap-8">
+                        <div className="flex flex-wrap justify-center gap-2 p-1.5 bg-secondary/30 backdrop-blur rounded-full border border-white/5">
+                            {pricingTiers.map((tier) => (
+                                <button
+                                    key={tier.id}
+                                    onClick={() => setActiveTier(tier.id)}
+                                    className={cn(
+                                        "relative px-6 py-2.5 rounded-full text-sm font-medium transition-colors duration-300",
+                                        activeTier === tier.id ? "text-white" : "text-muted-foreground hover:text-white"
+                                    )}
+                                >
+                                    {activeTier === tier.id && (
+                                        <motion.div
+                                            layoutId="activeTab"
+                                            className={cn("absolute inset-0 rounded-full bg-primary/20 border border-primary/30", tier.bgColor.replace("/10", "/30"))}
+                                            transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                        />
+                                    )}
+                                    <span className="relative z-10 flex items-center gap-2">
+                                        <tier.icon className={cn("w-4 h-4", activeTier === tier.id ? tier.color : "text-muted-foreground")} />
+                                        {tier.name}
+                                    </span>
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Active Tier Content */}
+                        <div className="w-full max-w-4xl min-h-[400px]">
+                            <AnimatePresence mode="wait">
+                                {pricingTiers.map((tier) => (
+                                    tier.id === activeTier && (
+                                        <motion.div
+                                            key={tier.id}
+                                            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                                            transition={{ duration: 0.4 }}
+                                            className="w-full"
+                                        >
+                                            <Card className={cn(
+                                                "border-2 backdrop-blur-sm transition-colors duration-500",
+                                                tier.borderColor,
+                                                "bg-card/50"
+                                            )}>
+                                                <div className={cn("absolute inset-0 opacity-10 blur-3xl transition-colors duration-500", tier.bgColor)} />
+
+                                                <CardHeader className="text-center pb-8 pt-10">
+                                                    <div className={cn("mx-auto w-16 h-16 rounded-2xl flex items-center justify-center mb-6 ring-4 ring-white/5", tier.bgColor)}>
+                                                        <tier.icon className={cn("w-8 h-8", tier.color)} />
+                                                    </div>
+                                                    <CardTitle className="text-3xl mb-2">{tier.name}</CardTitle>
+                                                    <div className="flex items-center justify-center gap-1 text-2xl font-bold text-foreground/80">
+                                                        <span className="text-lg text-muted-foreground font-normal">Est.</span>
+                                                        {tier.price}
+                                                        <span className="text-lg text-muted-foreground font-normal">Robux</span>
+                                                    </div>
+                                                    <CardDescription className="text-lg mt-4 max-w-xl mx-auto">
+                                                        {tier.description}
+                                                    </CardDescription>
+                                                </CardHeader>
+
+                                                <CardContent className="pb-10">
+                                                    <div className="max-w-2xl mx-auto">
+                                                        <h4 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-6 text-center">Common Examples</h4>
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                            {tier.examples.map((example, idx) => (
+                                                                <motion.div
+                                                                    key={idx}
+                                                                    initial={{ opacity: 0, x: -10 }}
+                                                                    animate={{ opacity: 1, x: 0 }}
+                                                                    transition={{ delay: idx * 0.1 }}
+                                                                    className="flex items-center gap-3 p-3 rounded-lg bg-secondary/20 border border-white/5 hover:border-white/10 transition-colors"
+                                                                >
+                                                                    <div className={cn("w-1.5 h-1.5 rounded-full shrink-0", tier.color.replace("text-", "bg-"))} />
+                                                                    <span className="text-sm font-medium">{example}</span>
+                                                                </motion.div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </CardContent>
+                                            </Card>
+                                        </motion.div>
+                                    )
+                                ))}
+                            </AnimatePresence>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Requirements & Payments Grid */}
                 <motion.div
                     variants={container}
                     initial="hidden"
-                    animate="visible"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
                     className="grid grid-cols-1 md:grid-cols-2 gap-8"
                 >
                     {/* Policy Card */}
